@@ -1,9 +1,11 @@
+import Home from './containers/Home.tsx';
 
 
 const App = () => {
 
   return (
     <>
+      <Home/>
     </>
   );
 };
