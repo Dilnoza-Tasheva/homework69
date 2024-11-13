@@ -1,5 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IShow } from '../../types';
+import { fetchAllShows } from '../thunks/tvShowsThunks.ts';
+import { RootState } from '../../app/store.ts';
 
 interface tvShowsState {
   shows: IShow[],
@@ -13,11 +15,25 @@ const initialState: tvShowsState = {
   fetchOneShowLoading: false,
 };
 
+export const selectFetchAllShows = (state: RootState) => state.tvShows.fetchAllLoading;
+
 export const tvShowSlice = createSlice({
   name: 'tvShow',
   initialState,
-  reducers: {}
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllShows.pending, (state) => {
+        state.fetchAllLoading = true;
+      })
+      .addCase(fetchAllShows.fulfilled, (state, action: PayloadAction<IShow[]>) => {
+        state.fetchAllLoading = false;
+        state.shows = action.payload;
+      })
+      .addCase(fetchAllShows.rejected, (state) => {
+        state.fetchAllLoading = false;
+      });
+  }
 });
 
 export const tvShowsReducer = tvShowSlice.reducer;
-export const {} = tvShowSlice.actions;

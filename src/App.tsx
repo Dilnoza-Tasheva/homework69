@@ -1,11 +1,11 @@
-import Home from './containers/Home.tsx';
+import TvShowsSearchBar from './components/tvShowsSearchBar.tsx';
 
 
 const App = () => {
 
   return (
     <>
-      <Home/>
+      <TvShowsSearchBar/>
     </>
   );
 };
