@@ -3,8 +3,11 @@ export interface IShow {
   name: string;
   genres: string;
   summary: string;
-}
-
-export interface IshowApi {
-  [id: number]: IShow
+  image? : {
+    medium: string;
+    original: string;
+  }
+  rating? : {
+    average: number;
+  }
 }

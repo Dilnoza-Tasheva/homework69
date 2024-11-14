@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
-import { selectFetchAllShows } from '../store/slices/tvShowSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { selectFetchAllShows } from '../../store/slices/tvShowSlice.ts';
 import { useState } from 'react';
 import { CircularProgress, Link, TextField } from '@mui/material';
 import * as React from 'react';
-import { fetchAllShows } from '../store/thunks/tvShowsThunks.ts';
+import { fetchAllShows } from '../../store/thunks/tvShowsThunks.ts';
 import { NavLink } from 'react-router-dom';
 
 
@@ -19,6 +19,10 @@ const TvShowsSearchBar = () => {
     if (newQuery) {
       dispatch(fetchAllShows(newQuery));
     }
+  };
+
+  const hideShowSelect = () => {
+    setQuery('');
   };
 
 
@@ -40,7 +44,7 @@ const TvShowsSearchBar = () => {
           width: '100%', maxHeight: '200px', overflowY: 'auto', zIndex: 1
         }}>
           {shows.map((show) => (
-            <div key={show.id} style={{padding: '10px'}}>
+            <div key={show.id} style={{padding: '10px'}} onClick={hideShowSelect}>
               <Link sx={{textDecoration: 'none'}} component={NavLink} to={`shows/${show.id}`}>{show.name}</Link>
             </div>
           ))}
