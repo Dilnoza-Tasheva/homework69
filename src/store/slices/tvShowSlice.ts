@@ -1,21 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IShow } from '../../types';
-import { fetchAllShows } from '../thunks/tvShowsThunks.ts';
+import { fetchAllShows, fetchOneShowById } from '../thunks/tvShowsThunks.ts';
 import { RootState } from '../../app/store.ts';
 
 interface tvShowsState {
-  shows: IShow[],
-  fetchAllLoading: boolean,
-  fetchOneShowLoading: boolean,
+  shows: IShow[];
+  selectedShow: IShow | null;
+  fetchAllLoading: boolean;
+  fetchOneShowLoading: boolean;
 }
 
 const initialState: tvShowsState = {
   shows: [],
+  selectedShow: null,
   fetchAllLoading: false,
   fetchOneShowLoading: false,
 };
 
 export const selectFetchAllShows = (state: RootState) => state.tvShows.fetchAllLoading;
+export const selectFetchOneShow = (state: RootState) => state.tvShows.fetchOneShowLoading;
 
 export const tvShowSlice = createSlice({
   name: 'tvShow',
@@ -32,6 +35,16 @@ export const tvShowSlice = createSlice({
       })
       .addCase(fetchAllShows.rejected, (state) => {
         state.fetchAllLoading = false;
+      })
+      .addCase(fetchOneShowById.pending, (state) => {
+        state.fetchOneShowLoading = true;
+      })
+      .addCase(fetchOneShowById.fulfilled, (state, action: PayloadAction<IShow>) => {
+        state.fetchOneShowLoading = false;
+        state.selectedShow = action.payload;
+      })
+      .addCase(fetchOneShowById.rejected, (state) => {
+        state.fetchOneShowLoading = false;
       });
   }
 });

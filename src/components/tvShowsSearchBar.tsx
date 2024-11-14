@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CircularProgress, Link, TextField } from '@mui/material';
 import * as React from 'react';
 import { fetchAllShows } from '../store/thunks/tvShowsThunks.ts';
+import { NavLink } from 'react-router-dom';
 
 
 const TvShowsSearchBar = () => {
@@ -40,7 +41,7 @@ const TvShowsSearchBar = () => {
         }}>
           {shows.map((show) => (
             <div key={show.id} style={{padding: '10px'}}>
-              <Link sx={{textDecoration: 'none'}}>{show.name}</Link>
+              <Link sx={{textDecoration: 'none'}} component={NavLink} to={`shows/${show.id}`}>{show.name}</Link>
             </div>
           ))}
         </div>
