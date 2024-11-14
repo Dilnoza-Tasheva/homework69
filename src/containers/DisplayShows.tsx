@@ -27,6 +27,8 @@ const DisplayShows = () => {
     return <div>No information available.Try again</div>;
   }
 
+  const cleanSummary = oneShow.summary.replace(/<[^>]*>/g, '');
+
   return (
     <Box display="flex" justifyContent="center" mt={4}>
       <Card sx={{ boxShadow: 3 }}>
@@ -41,7 +43,7 @@ const DisplayShows = () => {
         <CardContent>
           <Typography variant="h4" component="div" gutterBottom >{oneShow.name}</Typography>
           <Typography variant="h5" color="primary">{oneShow.genres}</Typography>
-          <Typography variant="body1" color="textSecondary" >{oneShow.summary}</Typography>
+          <Typography variant="body1" color="textSecondary" >{cleanSummary}</Typography>
           <Box>
             <Typography variant="body2" color="textSecondary">
               Rating: {oneShow.rating?.average || 'N/a'}
